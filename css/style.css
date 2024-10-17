@@ -78,7 +78,7 @@ header #logo {
 #main {
 	overflow: hidden;
 	float: right;		/*右に回り込み*/
-	width: 75%;			/*ブロックの幅*/
+	width: 70%;			/*ブロックの幅*/
 }
 
 /* 横並び */
