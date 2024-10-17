@@ -1,1 +1,0 @@
-# shintarominagawa.github.io
