@@ -625,3 +625,14 @@ img.fr,img.fl {float: none;margin: 0;width: 100%;}
   width: 100% !important;
   max-width: 100% !important;
 }
+
+#sub #arxivfeed a {
+  font-weight: 600;
+  color: #555;          /* サイトの文字色に合わせて調整 */
+}
+
+#sub #arxivfeed .arxivfeed_authors,
+#sub #arxivfeed span {
+  font-size: 85%;
+  color: #777;
+}
