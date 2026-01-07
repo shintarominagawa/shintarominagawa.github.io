@@ -596,3 +596,27 @@ img.fr,img.fl {float: none;margin: 0;width: 100%;}
 #sub #arxivfeed a:hover {
   text-decoration: underline !important;
 }
+
+/* ===== 右側が余る問題の本丸：padding と table 幅を潰す ===== */
+
+/* 緑枠コンテナの左右paddingが原因になりがち */
+#sub #arxivfeed .arxivfeed {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* prettyは内部にtableを使うことがあるので、table/tdが固定幅だと右が余る */
+#sub #arxivfeed table {
+  width: 100% !important;
+  max-width: 100% !important;
+  table-layout: fixed !important;   /* これが効くと“固定幅感”が消えやすい */
+  border-collapse: collapse;
+}
+
+#sub #arxivfeed td,
+#sub #arxivfeed th {
+  width: auto !important;
+  max-width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
