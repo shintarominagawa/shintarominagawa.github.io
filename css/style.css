@@ -535,9 +535,25 @@ img.fr,img.fl {float: none;margin: 0;width: 100%;}
   margin-top: 20px;
 }
 
-/* arXivの表示をサイドバー幅に収める */
-#sub #arxivfeed, #sub .arxivfeed {
-  width: 100%;
+/* arXivウィジェット全体をサイドバー幅にフィット */
+#sub .arxivfeed {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;          /* 中央寄せ解除 */
+  box-sizing: border-box;
+  font-size: 100%;
   overflow-wrap: anywhere;
-  font-size: 90%;
+}
+
+/* 中の要素もすべて幅計算を揃える */
+#sub .arxivfeed * {
+  box-sizing: border-box;
+  text-align: left;              /* 念のため中央寄せ防止 */
+}
+
+/* 二重 arxivfeed 対策（pretty特有） */
+#sub .arxivfeed .arxivfeed {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
 }
