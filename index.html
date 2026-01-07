@@ -111,18 +111,16 @@
 </nav>
 
 <section class="sidebarbox">
-  <h2>Recent arXiv</h2>
-  <div class="arxivwrap">
-    <div id="arxivfeed">Loading…</div>
-  </div>
+	<h2>arXiv</h2>
+	<div id="arxivfeed">Loading…</div>
 
-  <script>
-    var arxiv_authorid = "minagawa_s_1";
-    var arxiv_format = "arxiv";
-    var arxiv_max_entries = 10;
-    var arxiv_includeSummary = 0;
-  </script>
-  <script src="https://arxiv.org/js/myarticles.js"></script>
+	<script type="text/javascript">
+		var arxiv_authorid = "minagawa_s_1";
+		var arxiv_format = "pretty";     // サイドバーなら pretty が相性いい
+		var arxiv_max_entries = 8;       // 長すぎるなら調整（0で全件）
+		var arxiv_includeSummary = 0;
+	</script>
+	<script type="text/javascript" src="https://arxiv.org/js/myarticles.js"></script>
 </section>
 
 <br>
@@ -151,8 +149,20 @@
 	<li><a href="presentations.html">PRESENTATIONS</a></li>
 </ul>
 <br>
-
 </nav>
+
+<section class="sidebarbox">
+	<h2>arXiv</h2>
+	<div id="arxivfeed">Loading…</div>
+
+	<script type="text/javascript">
+		var arxiv_authorid = "minagawa_s_1";
+		var arxiv_format = "pretty";     // サイドバーなら pretty が相性いい
+		var arxiv_max_entries = 8;       // 長すぎるなら調整（0で全件）
+		var arxiv_includeSummary = 0;
+	</script>
+	<script type="text/javascript" src="https://arxiv.org/js/myarticles.js"></script>
+</section>
 
 <!--ページの上部に戻る「↑」ボタン-->
 <p class="nav-fix-pos-pagetop"><a href="#">↑</a></p>
