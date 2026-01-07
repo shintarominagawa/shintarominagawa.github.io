@@ -620,3 +620,8 @@ img.fr,img.fl {float: none;margin: 0;width: 100%;}
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
+
+#sub #arxivfeed [style*="width"] {
+  width: 100% !important;
+  max-width: 100% !important;
+}
