@@ -530,27 +530,13 @@ img.fr,img.fl {float: none;margin: 0;width: 100%;}
 
 }
 
-/* arXiv部分だけサイトの強いスタイルを無効化気味にする */
-.arxivwrap, .arxivwrap * {
-  text-align: left;
-  line-height: 1.35;
+/* サイドバーに置く箱 */
+.sidebarbox {
+  margin-top: 20px;
 }
 
-/* リストの見やすさ */
-.arxivwrap a {
-  text-decoration: none;
-}
-.arxivwrap a:hover {
-  text-decoration: underline;
-}
-
-/* 余白調整（お好みで） */
-.arxivwrap p, .arxivwrap div, .arxivwrap span {
-  margin: 0.2em 0;
-}
-
-/* サイドバーに収める */
-#sub .arxivwrap {
+/* arXivの表示をサイドバー幅に収める */
+#sub #arxivfeed, #sub .arxivfeed {
   width: 100%;
   overflow-wrap: anywhere;
   font-size: 90%;
