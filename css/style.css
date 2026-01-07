@@ -529,3 +529,15 @@ img.fr,img.fl {float: none;margin: 0;width: 100%;}
 .pc {display:none;}
 
 }
+
+/* サイドバーに置く箱 */
+.sidebarbox {
+  margin-top: 20px;
+}
+
+/* arXivの表示をサイドバー幅に収める */
+#sub #arxivfeed, #sub .arxivfeed {
+  width: 100%;
+  overflow-wrap: anywhere;
+  font-size: 90%;
+}
