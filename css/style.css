@@ -532,41 +532,67 @@ img.fr,img.fl {float: none;margin: 0;width: 100%;}
 
 /* ===== arXiv (pretty) をサイドバー幅に強制フィット ===== */
 
-/* 置き場所そのもの */
 #sub #arxivfeed{
   width: 100% !important;
   max-width: 100% !important;
 }
 
-/* #arxivfeed の直下に生成される “外枠候補” を全部広げる */
+/* 固定幅・中央寄せの犯人になりがちな要素を潰す */
 #sub #arxivfeed > div,
 #sub #arxivfeed > table,
-#sub #arxivfeed > center,
-#sub #arxivfeed > * {
+#sub #arxivfeed > center {
   width: 100% !important;
   max-width: 100% !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
+  margin: 0 !important;
   box-sizing: border-box;
 }
 
-/* ウィジェット内に table があると固定幅になりがちなので潰す */
 #sub #arxivfeed table {
   width: 100% !important;
   max-width: 100% !important;
   box-sizing: border-box;
 }
 
-/* “中央寄せ”の犯人になりがちな指定を潰す */
 #sub #arxivfeed center { 
   display: block !important;
   width: 100% !important;
 }
 
-/* 念のため、arxivfeed クラスの箱も広げる */
+/* 緑枠（prettyのコンテナ）対策 */
 #sub #arxivfeed .arxivfeed{
   width: 100% !important;
   max-width: 100% !important;
   margin: 0 !important;
   box-sizing: border-box;
+}
+
+/* ===== arXivウィジェット内の文章を“普通の論文リスト”に矯正 ===== */
+
+#sub #arxivfeed {
+  text-align: left !important;
+  line-height: 1.35;
+  font-size: 90%;
+}
+
+/* 中央寄せを全部潰す（ここは強くてOK） */
+#sub #arxivfeed * {
+  text-align: left !important;
+  box-sizing: border-box;
+}
+
+/* 余白を詰める：間延び対策 */
+#sub #arxivfeed p,
+#sub #arxivfeed div,
+#sub #arxivfeed span {
+  margin: 0.2em 0 !important;
+  padding: 0 !important;
+}
+
+/* リンクを研究者サイトっぽく */
+#sub #arxivfeed a {
+  text-decoration: none !important;
+  font-weight: 600;
+}
+#sub #arxivfeed a:hover {
+  text-decoration: underline !important;
 }
