@@ -530,30 +530,43 @@ img.fr,img.fl {float: none;margin: 0;width: 100%;}
 
 }
 
-/* サイドバーに置く箱 */
-.sidebarbox {
-  margin-top: 20px;
-}
+/* ===== arXiv (pretty) をサイドバー幅に強制フィット ===== */
 
-/* arXivウィジェット全体をサイドバー幅にフィット */
-#sub .arxivfeed {
+/* 置き場所そのもの */
+#sub #arxivfeed{
   width: 100% !important;
   max-width: 100% !important;
-  margin: 0 !important;          /* 中央寄せ解除 */
-  box-sizing: border-box;
-  font-size: 100%;
-  overflow-wrap: anywhere;
 }
 
-/* 中の要素もすべて幅計算を揃える */
-#sub .arxivfeed * {
+/* #arxivfeed の直下に生成される “外枠候補” を全部広げる */
+#sub #arxivfeed > div,
+#sub #arxivfeed > table,
+#sub #arxivfeed > center,
+#sub #arxivfeed > * {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
   box-sizing: border-box;
-  text-align: left;              /* 念のため中央寄せ防止 */
 }
 
-/* 二重 arxivfeed 対策（pretty特有） */
-#sub .arxivfeed .arxivfeed {
+/* ウィジェット内に table があると固定幅になりがちなので潰す */
+#sub #arxivfeed table {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+/* “中央寄せ”の犯人になりがちな指定を潰す */
+#sub #arxivfeed center { 
+  display: block !important;
+  width: 100% !important;
+}
+
+/* 念のため、arxivfeed クラスの箱も広げる */
+#sub #arxivfeed .arxivfeed{
   width: 100% !important;
   max-width: 100% !important;
   margin: 0 !important;
+  box-sizing: border-box;
 }
