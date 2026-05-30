@@ -615,19 +615,28 @@ iframe[src*="google.com/maps"] {
     --content-gutter-total: 28px;
   }
 
+  /*
+    Mobile navigation:
+    show the page tabs directly instead of hiding them behind the Menu button.
+    The tabs become a horizontal scroll strip on small screens.
+  */
   body.nav-open {
-    overflow: hidden;
+    overflow: auto;
   }
 
   .site-header {
-    padding: 10px 12px;
+    padding: 10px 10px;
   }
 
   .topbar {
+    min-height: var(--topbar-height);
+    padding: 8px;
     border-radius: 26px;
-    align-items: flex-start;
-    justify-content: flex-end;
-    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 0;
+    overflow: hidden;
   }
 
   .brand-mark {
@@ -636,27 +645,49 @@ iframe[src*="google.com/maps"] {
   }
 
   .nav-toggle {
-    display: inline-flex;
+    display: none;
   }
 
   .nav-menu {
     width: 100%;
+    min-width: 0;
+    display: flex;
+    padding: 0;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.22rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    background: transparent;
+    border-radius: 999px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+
+  .nav-menu::-webkit-scrollbar {
     display: none;
-    padding: 0.7rem;
-    flex-direction: column;
-    align-items: stretch;
-    background: rgba(255, 255, 255, 0.54);
-    border-radius: 18px;
   }
 
   body.nav-open .nav-menu {
     display: flex;
   }
 
+  .nav-menu li {
+    flex: 0 0 auto;
+  }
+
   .nav-menu a {
-    justify-content: flex-start;
-    width: 100%;
-    min-height: 48px;
+    justify-content: center;
+    width: auto;
+    min-height: 44px;
+    padding: 0 0.74rem;
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+
+  .nav-menu a[aria-current="page"] {
+    background: rgba(0, 166, 200, 0.16);
   }
 
   .hero {
@@ -882,4 +913,24 @@ iframe[src*="google.com/maps"] {
   font-size: 0.84rem;
   font-weight: 750;
   backdrop-filter: blur(10px);
+}
+
+
+/* Extra compact mobile navigation
+---------------------------------------------------------------------------*/
+@media (max-width: 600px) {
+  .site-header {
+    padding: 10px 8px;
+  }
+
+  .topbar {
+    padding: 7px;
+  }
+
+  .nav-menu a {
+    min-height: 40px;
+    padding: 0 0.62rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.035em;
+  }
 }
