@@ -961,3 +961,22 @@ iframe[src*="google.com/maps"] {
   font-weight: 750;
   backdrop-filter: blur(10px);
 }
+
+/* Mobile header placement fix
+---------------------------------------------------------------------------*/
+@media (max-width: 860px) {
+  .site-header {
+    position: sticky;
+    top: 0;
+    right: auto;
+    left: auto;
+    z-index: 100;
+    padding: 10px 12px;
+    background: linear-gradient(135deg, var(--bg), var(--bg-2));
+  }
+
+  .hero,
+  .hero--home {
+    margin-top: 0;
+  }
+}
