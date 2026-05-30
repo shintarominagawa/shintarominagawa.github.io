@@ -1,638 +1,885 @@
 @charset "utf-8";
 
+/*
+  Original redesign for Shintaro Minagawa's website.
+  This stylesheet is intentionally independent from the previous template CSS.
+*/
 
-/*slide.cssと、lightbox.cssの読み込み
-------------------------------------------------------------------------------------------------------------------------------------------------------*/
-@import url(slide.css);
-@import url(https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.css);
-
-
-/*全端末（PC・タブレット・スマホ）共通設定
-------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
-/*全体の設定
----------------------------------------------------------------------------*/
-body {
-	margin: 0px;
-	padding: 0px;
-	color: #777;	/*全体の文字色*/
-	font-family:"ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;	/*フォント種類*/
-	font-size: 18px;	/*文字サイズ*/
-	line-height: 2;		/*行間*/
-	background: #fff url(../images/bg1.jpg);	/*背景色、背景画像の読み込み*/
-	-webkit-text-size-adjust: none;
+:root {
+  --bg: #07111f;
+  --bg-2: #0d2236;
+  --ink: #172033;
+  --ink-strong: #0c1322;
+  --muted: #667085;
+  --paper: #fbfaf7;
+  --paper-soft: #f3f0e9;
+  --line: rgba(23, 32, 51, 0.13);
+  --line-strong: rgba(23, 32, 51, 0.22);
+  --white: #ffffff;
+  --accent: #00a6c8;
+  --accent-2: #f3b36a;
+  --accent-3: #8ad7c4;
+  --link: #007c99;
+  --shadow: 0 24px 70px rgba(7, 17, 31, 0.20);
+  --shadow-soft: 0 14px 38px rgba(7, 17, 31, 0.12);
+  --radius-lg: 30px;
+  --radius-md: 20px;
+  --radius-sm: 12px;
+  --max: 1660px;
+  --content-gutter-total: clamp(96px, 10vw, 224px);
+  --topbar-height: 74px;
 }
-h1,h2,h3,h4,h5,p,ul,ol,li,dl,dt,dd,form,figure,form,input,textarea {margin: 0px;padding: 0px;font-size: 100%;font-weight: normal;}
-ul {list-style-type: none;}
-img {border: none;max-width: 100%;height: auto;vertical-align: middle;}
-table {border-collapse:collapse;font-size: 100%;border-spacing: 0;}
-iframe {width: 100%;}
 
-/*リンク（全般）設定
----------------------------------------------------------------------------*/
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 12% -10%, rgba(0, 166, 200, 0.30), transparent 34rem),
+    radial-gradient(circle at 92% 2%, rgba(243, 179, 106, 0.18), transparent 30rem),
+    linear-gradient(135deg, var(--bg), var(--bg-2) 48%, #102a3d);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 17px;
+  line-height: 1.72;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.030) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.030) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent 72%);
+}
+
+img,
+iframe {
+  max-width: 100%;
+}
+
+img {
+  display: block;
+  height: auto;
+}
+
 a {
-	color: #777;		/*リンクテキストの色*/
-	transition: 0.4s;	/*マウスオン時の移り変わるまでの時間設定。0.4秒。*/
+  color: var(--link);
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 0.08em;
+  transition: color 160ms ease, text-decoration-color 160ms ease;
 }
+
 a:hover {
-	color: #709144;			/*マウスオン時の文字色*/
-	text-decoration: none;	/*マウスオン時に下線を消す設定。残したいならこの１行削除。*/
+  color: #005f73;
+  text-decoration-color: transparent;
 }
 
-/*container。サイト全体を囲むブロック
----------------------------------------------------------------------------*/
-#container {
-	overflow: hidden;
-	max-width: 1300px;		/*最大幅の制限。これ以上広がらない。*/
-	margin: 30px auto 0;
-	box-shadow: 0px 0px 10px rgba(0,0,0,0.2);	/*ボックスの影。右へ、下へ、ぼかし幅。0,0,0は黒の事で0.2は色が20%ついた状態の事。*/
-	border-radius: 30px;	/*角丸のサイズ*/
-	padding: 40px;		/*ボックス内の余白*/
-	background: #fff;	/*背景色*/
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 1000;
+  transform: translateY(-150%);
+  padding: 0.7rem 1rem;
+  color: var(--ink-strong);
+  background: var(--white);
+  border-radius: 999px;
+  box-shadow: var(--shadow-soft);
 }
 
-/*headerブロック
----------------------------------------------------------------------------*/
-/*headerブロック*/
-header {
-	position: relative;
-}
-/*header内のロゴ*/
-header #logo {
-	position: absolute;z-index: 1;
-	left: 5%;	/*headerの左から5%の場所に配置*/
-	top: 18%;	/*headerの上から18%の場所に配置*/
-	width: 20%;	/*画像の幅*/
-	background: #000;	/*背景色（古いブラウザ用）*/
-	background: rgba(0,0,0,0.5);	/*画像の背景色。0,0,0は黒の事で0.5は50%色がついた状態。*/
+.skip-link:focus {
+  transform: translateY(0);
 }
 
-/*contentsブロック。mainとsubブロックを囲むボックスです。
----------------------------------------------------------------------------*/
-#contents {
-	padding: 40px 0;	/*上下、左右へのコンテンツ内の余白*/
+.site-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+  padding: 14px clamp(16px, 4vw, 42px);
+  pointer-events: none;
 }
 
-/*mainブロック
----------------------------------------------------------------------------*/
-#main {
-	overflow: hidden;
-	float: right;		/*右に回り込み*/
-	width: 73%;			/*ブロックの幅*/
+.topbar {
+  width: min(var(--max), 100%);
+  min-height: var(--topbar-height);
+  margin: 0 auto;
+  padding: 10px clamp(14px, 2.4vw, 34px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  background: rgba(251, 250, 247, 0.76);
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: 999px;
+  box-shadow: 0 18px 50px rgba(7, 17, 31, 0.16);
+  backdrop-filter: blur(18px) saturate(1.15);
+  pointer-events: auto;
 }
 
-/* 横並び */
-.flex {
-	display: flex; /*横並び*/
-  }
-  .flex .right {
-	margin: 0 0 0 20px;
-	padding: 0;
-  }
-  .flex .title {
-	margin: 0;
-	padding: 0;
-	font-weight: bold;
-	font-size: 18px;
-  }
-  .flex .text {
-	margin: 0 0 0;
-	padding: 0;
-  }
-  .flex .image {
-	width: 1000px; /*画像サイズ指定*/
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	position: relative;
-  }
-
-/*h2タグ*/
-#main h2 {
-	clear: both;
-	margin-bottom: 20px;	/*見出しの下(外側)に空けるスペース*/
-	color: #fff;			/*文字色*/
-	background: #709144 url(../images/arrow1.png) no-repeat left center;	/*背景色と背景画像（古いブラウザ用）*/
-	background: url(../images/arrow1.png) no-repeat left center, linear-gradient(#9fbd77, #85a65a 49%, #709144 50%);	/*背景画像の読み込み、グラデーション*/
-	border-radius: 30px;	/*角丸のサイズ*/
-	padding: 10px 20px 10px 50px;	/*上、右、下、左への見出し内の余白*/
-}
-/*h3タグ*/
-#main h3 {
-	clear: both;
-	margin-bottom: 20px;	/*見出しの下(外側)に空けるスペース*/
-	color: #333;			/*文字色*/
-	background: linear-gradient(#fff, #eee);	/*グラデーション*/
-	border-radius: 30px;	/*角丸のサイズ*/
-	padding: 5px 20px;		/*上下、左右への見出し内の余白*/
-	border: 1px solid #ccc;	/*枠線の幅、線種、色*/
-}
-/*段落(p)タグ*/
-#main p {
-	padding: 0 20px 20px;	/*上、左右、下への余白*/
-}
-/*他*/
-#main p + p {
-	margin-top: -10px;
-}
-#main h2 + p,
-#main h3 + p {
-	margin-top: -7px;
-}
-#main section + section {
-	clear: both;
-	padding-top: 30px;
+.brand {
+  display: none;
 }
 
-/*Galleryページのサムネイル
----------------------------------------------------------------------------*/
-/*写真全体を囲むブロック*/
-.photo-block {
-	overflow: hidden;
-	margin: 0 20px 20px;	/*上、左右、下へのボックスの外側に空けるスペース*/
-}
-/*画像*/
-.list figure {
-	width: 25%;			/*画像幅*/
-	float: left;		/*左に回り込み*/
-	transition: 0.4s;	/*マウスオン時の移り変わるまでの時間設定。0.4秒。*/
-}
-/*マウスオン時の画像*/
-.list a:hover figure {
-	opacity: 0.6;		/*画像の色を60%出す*/
-}
-/*円形にするスタイル*/
-.list.circle figure img {
-	border-radius: 50%;
+.brand-mark {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  color: #052231;
+  background: linear-gradient(135deg, var(--accent-3), var(--accent-2));
+  border-radius: 50%;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.45);
 }
 
-/*subブロック
----------------------------------------------------------------------------*/
-#sub {
-	float: left;		/*左に回り込み*/
-	width: 22%;			/*ブロックの幅*/
-	text-align: center;	/*ブロック内を中央に*/
-}
-/*h2タグ*/
-#sub h2 {
-	background: #8c8c8c;	/*背景色（古いブラウザ用）*/
-	background: linear-gradient(#cbcbcb, #949494 49%, #8c8c8c 50%);	/*背景グラデーション*/
-	border-radius: 10px 10px 0px 0px;	/*角丸のサイズ。左上、右上、右下、左下への順番。*/
-	padding: 10px;	/*見出し内の余白*/
-	color: #fff;	/*文字色*/
+.brand-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/*メニュー
----------------------------------------------------------------------------*/
-/*メニューブロック全体の設定*/
-#menubar {
-	margin-bottom: 20px;	/*メニューブロックの下にあけるスペース*/
-}
-/*メニュー１個ごとの設定*/
-#menubar li a {
-	text-decoration: none;display: block;
-	padding: 10px;	/*ボックス内の余白*/
-	border-bottom: 2px dotted #ccc;	/*下の線の幅、線種、色*/
-}
-/*スマホ用メニューを表示させない*/
-#menubar-s {display: none;}
-/*３本バーアイコンを表示させない*/
-#menubar_hdr {display: none;}
-
-/*footerブロック
----------------------------------------------------------------------------*/
-footer {
-	clear: both;
-	text-align: center;
-	padding-bottom: 20px;
-}
-footer a {text-decoration: none;}
-footer .pr {display: block;}
-
-/*トップページ内「更新情報・お知らせ」ブロック
----------------------------------------------------------------------------*/
-/*ブロック全体の設定*/
-#new dl {
-	padding: 0px 20px;		/*上下、左右へのブロック内の余白*/
-	margin-bottom: 20px;	/*ブロックの下(外側)に空ける余白*/
-}
-/*日付設定*/
-#new dt {
-	float: left;
-	width: 9em;
-	letter-spacing: 0.1em;
-}
-/*記事設定*/
-#new dd {
-	padding-left: 9em;
-	border-bottom: 1px solid #ccc;	/*下線の幅、線種、色*/
+.nav-menu {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.18rem;
+  list-style: none;
 }
 
-/*テーブル（ta1）
----------------------------------------------------------------------------*/
-/*テーブル１行目に入った見出し部分（※caption）*/
-.ta1 caption {
-	border: 1px solid #ccc;	/*テーブルの枠線の幅、線種、色*/
-	border-bottom: none;	/*下線だけ消す*/
-	text-align: left;		/*文字を左寄せ*/
-	background: #eee;		/*背景色*/
-	font-weight: bold;		/*太字に*/
-	padding: 10px;		/*ボックス内の余白*/
-}
-/*ta1設定*/
-.ta1 {
-	width: 100%;
-	table-layout: fixed;
-	margin-bottom: 20px;
-}
-.ta1, .ta1 td, .ta1 th {
-	word-break: break-all;
-	border: 1px solid #ccc;	/*テーブルの枠線の幅、線種、色*/
-	padding: 10px;			/*ボックス内の余白*/
-}
-/*テーブル１行目に入った見出し部分*/
-.ta1 th.tamidashi {
-	width: auto;
-	text-align: left;	/*左よせ*/
-	background: #eee;		/*背景色*/
-}
-/*ta1の左側ボックス*/
-.ta1 th {
-	width: 140px;	/*幅*/
-	text-align: center;	/*センタリング*/
-	font-weight: normal;
+.nav-menu a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 0.92rem;
+  color: var(--ink);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 760;
+  letter-spacing: 0.04em;
+  text-decoration: none;
 }
 
-/*PAGE TOP（↑）設定
----------------------------------------------------------------------------*/
-@keyframes scroll {
-0% {opacity: 0;}
-100% {opacity: 1;}
-}
-/*通常時のボタンは非表示*/
-body .nav-fix-pos-pagetop a {
-	display: none;
-}
-/*fixmenu_pagetop.jsで設定している設定値になったら出現するボタンスタイル*/
-body.is-fixed-pagetop .nav-fix-pos-pagetop a {
-	display: block;text-decoration: none;text-align: center;z-index: 100;position: fixed;animation-name: scroll;animation-duration: 1s;animation-fill-mode: forwards;
-	width: 50px;		/*ボタンの幅*/
-	line-height: 50px;	/*ボタンの高さ*/
-	bottom: 20px;		/*ウィンドウの下から20pxの場所に配置*/
-	right: 1%;			/*ウィンドウの右から1%の場所に配置*/
-	color: #fff;		/*文字色*/
-	border-radius: 50%;	/*角丸指定。50%にすると円形になる。四角形がいいならこの１行削除。*/
-	background: #000;	/*背景色*/
-}
-/*マウスオン時の背景色*/
-body.is-fixed-pagetop .nav-fix-pos-pagetop a:hover {
-	background: #999;
+.nav-menu a:hover,
+.nav-menu a[aria-current="page"] {
+  color: var(--ink-strong);
+  background: rgba(0, 166, 200, 0.12);
 }
 
-/*トップページのNEWアイコン
----------------------------------------------------------------------------*/
+.nav-toggle {
+  display: none;
+  border: 0;
+  background: #0b1b2b;
+  color: var(--white);
+  border-radius: 999px;
+  padding: 0.68rem 0.9rem;
+  align-items: center;
+  gap: 0.42rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+.nav-toggle__line {
+  width: 1.1rem;
+  height: 2px;
+  display: block;
+  background: currentColor;
+  border-radius: 999px;
+}
+
+.nav-toggle__label {
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.hero {
+  position: relative;
+  min-height: 58vh;
+  display: grid;
+  align-items: end;
+  overflow: hidden;
+  color: var(--white);
+  isolation: isolate;
+  background: linear-gradient(135deg, #07111f, #102a3d);
+}
+
+.hero--home {
+  min-height: 74vh;
+}
+
+.hero-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.015);
+  filter: saturate(1.04) contrast(1.02);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(7, 17, 31, 0.88), rgba(7, 17, 31, 0.54) 46%, rgba(7, 17, 31, 0.18)),
+    linear-gradient(to top, rgba(7, 17, 31, 0.84), transparent 58%);
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  width: min(var(--max), calc(100% - var(--content-gutter-total)));
+  margin: 0 auto;
+  padding: calc(var(--topbar-height) + 70px) 0 clamp(88px, 13vw, 160px);
+}
+
+.eyebrow {
+  margin: 0 0 0.85rem;
+  color: var(--accent-3);
+  font-size: 0.82rem;
+  font-weight: 850;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  max-width: 880px;
+  margin: 0;
+  font-size: clamp(2.8rem, 6.4vw, 6.4rem);
+  line-height: 0.94;
+  letter-spacing: -0.06em;
+}
+
+.hero--home h1 {
+  max-width: 1200px;
+  font-size: clamp(2.4rem, 5.0vw, 5.0rem);
+}
+
+.hero--compact h1 {
+  font-size: clamp(2.4rem, 5.0vw, 5.0rem);
+}
+
+.hero-lead {
+  font-size: clamp(1rem, 1.8vw, 1.22rem);
+}
+
+.page-shell {
+  position: relative;
+  z-index: 2;
+  width: min(var(--max), calc(100% - var(--content-gutter-total)));
+  margin: -72px auto 0;
+  padding-bottom: clamp(70px, 9vw, 120px);
+}
+
+.layout-with-aside {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 300px);
+  gap: 24px;
+  align-items: start;
+}
+
+.content-panel,
+.content-aside {
+  min-width: 0;
+}
+
+.content-panel > section,
+.mini-card {
+  background: rgba(251, 250, 247, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.66);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.content-panel > section {
+  padding: clamp(28px, 4.6vw, 58px);
+}
+
+.content-panel > section + section {
+  margin-top: 24px;
+}
+
+.content-panel h2,
+.content-panel h3,
+.mini-card h2 {
+  color: var(--ink-strong);
+  line-height: 1.18;
+  letter-spacing: -0.035em;
+}
+
+.content-panel h2,
+.mini-card h2 {
+  margin: 0 0 1.45rem;
+  font-size: clamp(1.75rem, 3.1vw, 2.65rem);
+}
+
+.content-panel h2::after,
+.mini-card h2::after {
+  content: "";
+  display: block;
+  width: 58px;
+  height: 4px;
+  margin-top: 0.9rem;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-radius: 999px;
+}
+
+.content-panel h3 {
+  margin: 2.2rem 0 0.85rem;
+  font-size: clamp(1.18rem, 2vw, 1.48rem);
+}
+
+.content-panel h2 + h3 {
+  margin-top: 1.45rem;
+}
+
+.content-panel p,
+.content-panel ul,
+.content-panel ol,
+.content-panel dl,
+.legacy-block {
+  margin-top: 0;
+}
+
+.content-panel p {
+  margin-bottom: 1.05rem;
+}
+
+.content-panel p:last-child,
+.content-panel ul:last-child,
+.content-panel ol:last-child,
+.content-panel dl:last-child {
+  margin-bottom: 0;
+}
+
+.profile-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: clamp(24px, 4vw, 46px);
+  align-items: center;
+}
+
+.profile-title {
+  margin-bottom: 1rem !important;
+}
+
+.profile-title::after {
+  display: none !important;
+}
+
+.profile-text {
+  color: #344054;
+}
+
+.profile-photo {
+  margin: 0;
+  width: min(100%, 220px);
+  justify-self: center;
+  border-radius: 24px;
+  overflow: hidden;
+  aspect-ratio: 4 / 6;
+  background: var(--paper-soft);
+  box-shadow: var(--shadow-soft);
+}
+
+.profile-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+ul.disc,
+.content-panel ul {
+  padding-left: 1.25rem;
+}
+
+ul.disc li,
+.content-panel ul li,
+.content-panel ol li {
+  margin: 0.34rem 0;
+}
+
+.content-panel ol {
+  padding-left: 1.5rem;
+}
+
+.content-panel li::marker {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+#contact ul,
+#contact p {
+  max-width: 760px;
+}
+
+.color1 {
+  color: #006f8a;
+}
+
+.note {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
 .newicon {
-	background: #F00;	/*背景色*/
-	color: #FFF;		/*文字色*/
-	font-size: 70%;		/*文字サイズ*/
-	line-height: 1.5;
-	padding: 2px 5px;
-	border-radius: 2px;
-	margin: 0px 5px;
-	vertical-align: text-top;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.45rem;
+  padding: 0.12rem 0.46rem;
+  color: #5f3200;
+  background: #ffd79f;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+  vertical-align: middle;
 }
 
-/*ul.disc,olタグ
----------------------------------------------------------------------------*/
-ul.disc {
-	list-style: disc;
-	padding: 0 20px 20px 40px;
-}
-ol {
-	padding: 0 20px 20px 45px;
-}
-
-/*checkブロック。赤い注意書きブロックです。
----------------------------------------------------------------------------*/
-p.check {
-	background: #ff0000;
-	color:#fff;
-	padding: 10px 25px !important;
-	margin-bottom: 20px;
-}
-p.check a {color: #fff;}
-
-/*その他
----------------------------------------------------------------------------*/
-.look {background: #222;padding: 5px 10px;border-radius: 4px;border: 1px solid #333;color: #fff;}
-.mb15,.mb1em {margin-bottom: 15px !important;}
-.clear {clear: both;}
-.color1, .color1 a {color: #709144 !important;}
-.pr {font-size: 10px;}
-.wl {width: 96%;}
-.ws {width: 50%;}
-.c {text-align: center;}
-.r {text-align: right;}
-.l {text-align: left;}
-.fl {float: left;}
-.fr {float: right;}
-.big1 {font-size: 40px;}
-.mini1 {font-size: 11px;display: inline-block;line-height: 1.5;}
-.sh {display: none;}
-
-
-
-/*画面幅1350px以下の設定
-------------------------------------------------------------------------------------------------------------------------------------------------------*/
-@media screen and (max-width:1350px){
-
-/*container。サイト全体を囲むブロック
----------------------------------------------------------------------------*/
-#container {
-	margin: 20px 3%;	/*containerの外側にとるスペース*/
-}
-
-}
-
-
-
-/*画面幅800px以下の設定
-
-------------------------------------------------------------------------------------------------------------------------------------------------------*/
-@media screen and (max-width:800px){
-
-/*container。サイト全体を囲むブロック
----------------------------------------------------------------------------*/
-#container {
-	box-shadow: none;
-	padding: 30px 30px 0;	/*ボックス内の余白。上、左右、下。*/
-}
-
-/*contentsブロック。mainとsubブロックを囲むボックスです。
----------------------------------------------------------------------------*/
-#contents {
-	padding: 30px 0;	/*上下、左右へのコンテンツ内の余白*/
-}
-
-/*メインメニュー
----------------------------------------------------------------------------*/
-/*アニメーションのフレーム設定。全100コマアニメーションだと思って下さい。
-透明(opacity: 0;)から色をつける(opacity: 1;)までの指定。*/
-@keyframes menubar {
-	0% {opacity: 0;}
-	100% {opacity: 1;}
-}
-/*スマホ用メニューブロック*/
-#menubar-s {
-	display: block;overflow: hidden;
-	position: absolute;z-index: 2;
-	top: 0px;
-	left: 0px;
-	width: 100%;
-	animation-name: menubar;		/*上のkeyframesの名前*/
-	animation-duration: 0.5s;	/*アニメーションの実行時間。0.5秒。*/
-	animation-fill-mode: both;	/*待機中は最初のキーフレームを、完了後は最後のキーフレームを維持*/
-	background: rgba(0,0,0,0.7);	/*背景色。0,0,0は黒の事で0.7は70%色がついた状態の事。*/
-}
-/*メニュー１個あたりの設定*/
-#menubar-s li a {
-	display: block;text-decoration: none;
-	padding: 10px 3%;	/*メニュー内の余白。上下、左右。*/
-	color: #fff;		/*文字色*/
-	font-size: 20px;	/*文字サイズ*/
-	text-align: center;	/*テキストをセンタリング*/
-	border-bottom: 1px solid #fff;	/*下の線の幅、線種、色*/
-}
-/*説明表記（飾り文字）*/
-#menubar-s li a span {
-	display: block;
-	font-size: 12px;/*文字サイズ*/
-}
-/*PC用メニューを非表示にする*/
-#menubar {display: none;}
-
-/*３本バーアイコン設定
----------------------------------------------------------------------------*/
-/*３本バーブロック*/
-#menubar_hdr {
-	display: block;position: absolute;z-index: 3;
-	top: 5px;	/*上からの配置場所*/
-	right: 1%;	/*右からの配置場所*/
-}
-/*アイコン共通設定*/
-#menubar_hdr.close,
-#menubar_hdr.open {
-	width: 50px;		/*幅*/
-	height: 50px;		/*高さ*/
-	border-radius: 50%;	/*円形にする*/
-	border: 1px solid #fff;
-}
-/*三本バーアイコン*/
-#menubar_hdr.close {
-	background: #709144 url(../images/icon_menu.png) no-repeat center top/50px;	/*背景色、背景画像の読み込み、画像の上半分（３本マーク）を表示。幅は50px。*/
-}
-/*閉じるアイコン*/
-#menubar_hdr.open {
-	background: #709144 url(../images/icon_menu.png) no-repeat center bottom/50px;	/*背景色背景画像の読み込み、画像の下半分（×マーク）を表示。幅は50px。*/
-}
-
-/*main,subブロック
----------------------------------------------------------------------------*/
-#main,#sub {
-	float: none;
-	width: auto;
-}
-
-/*その他
----------------------------------------------------------------------------*/
-body.s-n #sub,body.s-n #footermenu,.m-n {display: none;}
-.big1 {font-size: 24px;}
-.fl {float: none;}
-.fr {float: none;}
-.sh {display:block;}
-.pc {display:none;}
-
-}
-
-
-
-/*画面幅480px以下の設定
-------------------------------------------------------------------------------------------------------------------------------------------------------*/
-@media screen and (max-width:480px){
-
-/*全体の設定
----------------------------------------------------------------------------*/
-body {
-	font-size: 11px;	/*文字サイズ*/
-	background: #fff;	/*背景色*/
-}
-
-/*container。サイト全体を囲むブロック
----------------------------------------------------------------------------*/
-#container {
-	margin: 0;border-radius: 0px;
-	padding: 20px 20px 0;	/*ボックス内の余白。上、左右、下。*/
-	line-height: 1.5;	/*行間*/
-}
-
-/*contentsブロック。mainとsubブロックを囲むボックスです。
----------------------------------------------------------------------------*/
-#contents {
-	padding: 20px 0;	/*上下、左右へのコンテンツ内の余白*/
-}
-
-/*mainブロック
----------------------------------------------------------------------------*/
-/*h2タグ*/
-#main h2 {
-	font-size: 14px;	/*文字サイズ*/
-	padding-left: 40px;	/*左側の余白の上書き*/
-}
-/*h3タグ*/
-#main h3 {
-	font-size: 13px;	/*文字サイズ*/
-}
-
-/*トップページ内「更新情報・お知らせ」ブロック
----------------------------------------------------------------------------*/
-/*ブロック全体の設定*/
 #new dl {
-	padding: 0px 10px;		/*上下、左右へのブロック内の余白*/
+  display: grid;
+  grid-template-columns: minmax(92px, 9rem) minmax(0, 1fr);
+  column-gap: 1rem;
+  row-gap: 0;
+  margin: 0 0 2rem;
 }
 
-/*テーブル（ta1）
+#new dt,
+#new dd {
+  padding: 0.78rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+#new dt {
+  color: #006f8a;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+#new dd {
+  margin: 0;
+}
+
+.r {
+  text-align: right;
+}
+
+.legacy-block {
+  margin-bottom: 1.2rem;
+}
+
+.site-embed,
+.content-panel iframe {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--white);
+  box-shadow: 0 12px 32px rgba(7, 17, 31, 0.08);
+}
+
+iframe[src*="docs.google.com/spreadsheets"] {
+  min-height: 560px;
+}
+
+iframe[src*="drive.google.com"] {
+  min-height: min(78vh, 860px);
+}
+
+iframe[src*="google.com/maps"] {
+  min-height: 450px;
+}
+
+.content-aside {
+  position: sticky;
+  top: 104px;
+}
+
+.mini-card {
+  padding: 26px;
+}
+
+.mini-card__label {
+  margin: 0 0 0.65rem;
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 850;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.arxiv-card h2 {
+  font-size: 1.4rem;
+  margin-bottom: 1.1rem;
+}
+
+#arxivfeed {
+  color: #344054;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+#arxivfeed a {
+  font-weight: 650;
+}
+
+.site-footer {
+  color: rgba(255, 255, 255, 0.72);
+  padding: 36px 18px 48px;
+}
+
+.footer-inner {
+  width: min(var(--max), 100%);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer a {
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.site-footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.95rem;
+}
+
+.to-top {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: 48px;
+  height: 48px;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  color: var(--ink-strong);
+  background: linear-gradient(135deg, var(--accent-3), var(--accent-2));
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.to-top.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+@media (max-width: 980px) {
+  .layout-with-aside {
+    grid-template-columns: 1fr;
+  }
+
+  .content-aside {
+    position: static;
+  }
+}
+
+@media (max-width: 860px) {
+  :root {
+    --topbar-height: 64px;
+    --content-gutter-total: 28px;
+  }
+
+  body.nav-open {
+    overflow: hidden;
+  }
+
+  .site-header {
+    padding: 10px 12px;
+  }
+
+  .topbar {
+    border-radius: 26px;
+    align-items: flex-start;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .brand-mark {
+    width: 42px;
+    height: 42px;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .nav-menu {
+    width: 100%;
+    display: none;
+    padding: 0.7rem;
+    flex-direction: column;
+    align-items: stretch;
+    background: rgba(255, 255, 255, 0.54);
+    border-radius: 18px;
+  }
+
+  body.nav-open .nav-menu {
+    display: flex;
+  }
+
+  .nav-menu a {
+    justify-content: flex-start;
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .hero {
+    min-height: 64vh;
+  }
+
+  .hero--home {
+    min-height: 76vh;
+  }
+
+  .hero-inner {
+    width: min(var(--max), calc(100% - var(--content-gutter-total)));
+    padding-bottom: 104px;
+  }
+
+  .page-shell {
+    width: min(var(--max), calc(100% - var(--content-gutter-total)));
+    margin-top: -58px;
+  }
+
+  .profile-card {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-photo {
+    max-width: 360px;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    font-size: 16px;
+  }
+
+  .brand-text {
+    max-width: 48vw;
+  }
+
+  .hero h1 {
+    letter-spacing: -0.055em;
+  }
+
+  .content-panel > section,
+  .mini-card {
+    padding: 24px;
+    border-radius: 22px;
+  }
+
+  #new dl {
+    display: block;
+  }
+
+  #new dt {
+    border-bottom: 0;
+    padding-bottom: 0.1rem;
+  }
+
+  #new dd {
+    padding-top: 0.15rem;
+  }
+
+  iframe[src*="docs.google.com/spreadsheets"] {
+    min-height: 520px;
+  }
+
+  .footer-inner {
+    display: block;
+  }
+
+  .site-footer nav {
+    margin-top: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+
+/* Marseille photo strip
 ---------------------------------------------------------------------------*/
-/*テーブル１行目に入った見出し部分（※caption）*/
-.ta1 caption {
-	padding: 5px;	/*ボックス内の余白*/
-}
-.ta1, .ta1 td, .ta1 th {
-	padding: 5px;	/*ボックス内の余白*/
-}
-/*ta1の左側ボックス*/
-.ta1 th {
-	width: 100px;	/*幅*/
+.section-kicker {
+  margin: 0 0 0.35rem;
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
-/*olタグ
+.gallery-intro {
+  max-width: 700px;
+  color: var(--muted);
+}
+
+.marseille-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 1.4rem;
+}
+
+.marseille-card {
+  position: relative;
+  min-height: 210px;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 24px;
+  background: var(--paper-soft);
+  box-shadow: 0 16px 34px rgba(7, 17, 31, 0.12);
+}
+
+.marseille-card--wide {
+  grid-column: span 2;
+}
+
+.marseille-card img {
+  width: 100%;
+  height: 100%;
+  min-height: 210px;
+  object-fit: cover;
+  transform: scale(1.01);
+}
+
+.marseille-card figcaption {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  padding: 0.38rem 0.72rem;
+  color: var(--white);
+  background: rgba(7, 17, 31, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  font-size: 0.84rem;
+  font-weight: 750;
+  backdrop-filter: blur(10px);
+}
+
+@media (max-width: 760px) {
+  .marseille-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .marseille-card--wide {
+    grid-column: auto;
+  }
+}
+
+
+
+/* Dedicated Marseille gallery page
 ---------------------------------------------------------------------------*/
-ol {
-	padding: 0 20px 20px 40px;
+.gallery-link {
+  margin: 1.4rem 0 0;
 }
 
-/*その他
----------------------------------------------------------------------------*/
-.ws,.wl {width: 94%;}
-.big1 {font-size: 18px;letter-spacing: normal;}
-img.fr,img.fl {float: none;margin: 0;width: 100%;}
-.sh {display:block;}
-.pc {display:none;}
-
+.gallery-link a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 0.95rem;
+  color: var(--ink-strong);
+  background: rgba(0, 166, 200, 0.11);
+  border: 1px solid rgba(0, 166, 200, 0.22);
+  border-radius: 999px;
+  font-weight: 760;
+  text-decoration: none;
 }
 
-/* ===== arXiv (pretty) をサイドバー幅に強制フィット ===== */
-
-#sub #arxivfeed{
-  width: 100% !important;
-  max-width: 100% !important;
+.gallery-link a:hover {
+  background: rgba(0, 166, 200, 0.17);
 }
 
-/* 固定幅・中央寄せの犯人になりがちな要素を潰す */
-#sub #arxivfeed > div,
-#sub #arxivfeed > table,
-#sub #arxivfeed > center {
-  width: 100% !important;
-  max-width: 100% !important;
-  margin: 0 !important;
-  box-sizing: border-box;
+.marseille-gallery-page .gallery-intro {
+  margin-bottom: 1.2rem;
 }
 
-#sub #arxivfeed table {
-  width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box;
+.marseille-gallery--page .marseille-card--full {
+  grid-column: 1 / -1;
+  min-height: 0;
 }
 
-#sub #arxivfeed center { 
-  display: block !important;
-  width: 100% !important;
+.marseille-gallery--page .marseille-card--full img {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  object-fit: contain;
+  object-position: center;
+  transform: none;
 }
 
-/* 緑枠（prettyのコンテナ）対策 */
-#sub #arxivfeed .arxivfeed{
-  width: 100% !important;
-  max-width: 100% !important;
-  margin: 0 !important;
-  box-sizing: border-box;
+.address-photo {
+  position: relative;
+  margin: 1.5rem 0 0;
+  overflow: hidden;
+  border-radius: 24px;
+  background: var(--paper-soft);
+  box-shadow: 0 16px 34px rgba(7, 17, 31, 0.12);
 }
 
-/* ===== arXivウィジェット内の文章を“普通の論文リスト”に矯正 ===== */
-
-#sub #arxivfeed {
-  text-align: left !important;
-  line-height: 1.35;
-  font-size: 90%;
+.address-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
-/* 中央寄せを全部潰す（ここは強くてOK） */
-#sub #arxivfeed * {
-  text-align: left !important;
-  box-sizing: border-box;
-}
-
-/* 余白を詰める：間延び対策 */
-#sub #arxivfeed p,
-#sub #arxivfeed div,
-#sub #arxivfeed span {
-  margin: 0.2em 0 !important;
-  padding: 0 !important;
-}
-
-/* リンクを研究者サイトっぽく */
-#sub #arxivfeed a {
-  text-decoration: none !important;
-  font-weight: 600;
-}
-#sub #arxivfeed a:hover {
-  text-decoration: underline !important;
-}
-
-/* ===== 右側が余る問題の本丸：padding と table 幅を潰す ===== */
-
-/* 緑枠コンテナの左右paddingが原因になりがち */
-#sub #arxivfeed .arxivfeed {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-}
-
-/* prettyは内部にtableを使うことがあるので、table/tdが固定幅だと右が余る */
-#sub #arxivfeed table {
-  width: 100% !important;
-  max-width: 100% !important;
-  table-layout: fixed !important;   /* これが効くと“固定幅感”が消えやすい */
-  border-collapse: collapse;
-}
-
-#sub #arxivfeed td,
-#sub #arxivfeed th {
-  width: auto !important;
-  max-width: 100% !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-}
-
-#sub #arxivfeed [style*="width"] {
-  width: 100% !important;
-  max-width: 100% !important;
-}
-
-#sub #arxivfeed a {
-  font-weight: 600;
-  color: #555;          /* サイトの文字色に合わせて調整 */
-}
-
-#sub #arxivfeed .arxivfeed_authors,
-#sub #arxivfeed span {
-  font-size: 85%;
-  color: #777;
+.address-photo figcaption {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  padding: 0.38rem 0.72rem;
+  color: var(--white);
+  background: rgba(7, 17, 31, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  font-size: 0.84rem;
+  font-weight: 750;
+  backdrop-filter: blur(10px);
 }
