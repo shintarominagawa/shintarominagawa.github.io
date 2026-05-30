@@ -615,22 +615,17 @@ iframe[src*="google.com/maps"] {
     --content-gutter-total: 28px;
   }
 
-  /*
-    Mobile navigation:
-    show the page tabs directly instead of hiding them behind the Menu button.
-    The tabs become a horizontal scroll strip on small screens.
-  */
   body.nav-open {
     overflow: auto;
   }
 
   .site-header {
-    padding: 10px 10px;
+    padding: 10px 12px;
   }
 
   .topbar {
-    min-height: var(--topbar-height);
-    padding: 8px;
+    min-height: auto;
+    padding: 10px 12px;
     border-radius: 26px;
     align-items: center;
     justify-content: flex-start;
@@ -650,19 +645,19 @@ iframe[src*="google.com/maps"] {
 
   .nav-menu {
     width: 100%;
-    min-width: 0;
     display: flex;
     padding: 0;
     flex-direction: row;
     align-items: center;
-    gap: 0.22rem;
+    gap: 0.12rem;
     overflow-x: auto;
     overflow-y: hidden;
+    white-space: nowrap;
+    list-style: none;
     background: transparent;
-    border-radius: 999px;
+    border-radius: 0;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    overscroll-behavior-x: contain;
   }
 
   .nav-menu::-webkit-scrollbar {
@@ -678,34 +673,86 @@ iframe[src*="google.com/maps"] {
   }
 
   .nav-menu a {
+    flex: 0 0 auto;
     justify-content: center;
     width: auto;
     min-height: 44px;
-    padding: 0 0.74rem;
+    padding: 0 0.82rem;
     font-size: 0.72rem;
-    white-space: nowrap;
   }
 
-  .nav-menu a[aria-current="page"] {
-    background: rgba(0, 166, 200, 0.16);
-  }
-
-  .hero {
-    min-height: 64vh;
+  /*
+    Mobile hero:
+    The image is no longer used as a cropped absolute background.
+    It becomes a normal image, so the browser can keep its full aspect ratio.
+    A minimum height is kept only to leave enough room for the title overlay.
+  */
+  .hero,
+  .hero--home {
+    display: block;
+    min-height: clamp(420px, 82vw, 560px);
+    overflow: hidden;
   }
 
   .hero--home {
-    min-height: 76vh;
+    min-height: clamp(480px, 94vw, 640px);
+  }
+
+  .hero-image {
+    position: static;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    object-fit: contain;
+    object-position: center;
+    transform: none;
+  }
+
+  .hero::after {
+    background:
+      linear-gradient(to top, rgba(7, 17, 31, 0.90), rgba(7, 17, 31, 0.46) 58%, rgba(7, 17, 31, 0.18)),
+      linear-gradient(90deg, rgba(7, 17, 31, 0.64), rgba(7, 17, 31, 0.18) 72%);
   }
 
   .hero-inner {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: min(var(--max), calc(100% - var(--content-gutter-total)));
-    padding-bottom: 104px;
+    padding: 0 0 clamp(58px, 14vw, 94px);
+  }
+
+  .eyebrow {
+    margin-bottom: 0.55rem;
+    font-size: 0.72rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.05rem, 8.2vw, 3.25rem);
+    line-height: 0.98;
+    letter-spacing: -0.055em;
+  }
+
+  .hero--home h1 {
+    max-width: min(100%, 760px);
+    font-size: clamp(1.9rem, 7.2vw, 3.0rem);
+  }
+
+  .hero--compact h1 {
+    font-size: clamp(2.05rem, 8.2vw, 3.25rem);
+  }
+
+  .hero-lead {
+    max-width: 92%;
+    margin-top: 0.85rem;
+    font-size: clamp(0.94rem, 3.8vw, 1.05rem);
+    line-height: 1.45;
   }
 
   .page-shell {
     width: min(var(--max), calc(100% - var(--content-gutter-total)));
-    margin-top: -58px;
+    margin-top: -42px;
   }
 
   .profile-card {
@@ -913,24 +960,4 @@ iframe[src*="google.com/maps"] {
   font-size: 0.84rem;
   font-weight: 750;
   backdrop-filter: blur(10px);
-}
-
-
-/* Extra compact mobile navigation
----------------------------------------------------------------------------*/
-@media (max-width: 600px) {
-  .site-header {
-    padding: 10px 8px;
-  }
-
-  .topbar {
-    padding: 7px;
-  }
-
-  .nav-menu a {
-    min-height: 40px;
-    padding: 0 0.62rem;
-    font-size: 0.68rem;
-    letter-spacing: 0.035em;
-  }
 }
