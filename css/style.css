@@ -616,7 +616,7 @@ iframe[src*="google.com/maps"] {
   }
 
   body.nav-open {
-    overflow: auto;
+    overflow: hidden;
   }
 
   .site-header {
@@ -624,14 +624,10 @@ iframe[src*="google.com/maps"] {
   }
 
   .topbar {
-    min-height: auto;
-    padding: 10px 12px;
     border-radius: 26px;
-    align-items: center;
-    justify-content: flex-start;
-    flex-wrap: nowrap;
-    gap: 0;
-    overflow: hidden;
+    align-items: flex-start;
+    justify-content: flex-end;
+    flex-wrap: wrap;
   }
 
   .brand-mark {
@@ -640,119 +636,45 @@ iframe[src*="google.com/maps"] {
   }
 
   .nav-toggle {
-    display: none;
+    display: inline-flex;
   }
 
   .nav-menu {
     width: 100%;
-    display: flex;
-    padding: 0;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.12rem;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    list-style: none;
-    background: transparent;
-    border-radius: 0;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .nav-menu::-webkit-scrollbar {
     display: none;
+    padding: 0.7rem;
+    flex-direction: column;
+    align-items: stretch;
+    background: rgba(255, 255, 255, 0.54);
+    border-radius: 18px;
   }
 
   body.nav-open .nav-menu {
     display: flex;
   }
 
-  .nav-menu li {
-    flex: 0 0 auto;
-  }
-
   .nav-menu a {
-    flex: 0 0 auto;
-    justify-content: center;
-    width: auto;
-    min-height: 44px;
-    padding: 0 0.82rem;
-    font-size: 0.72rem;
-  }
-
-  /*
-    Mobile hero:
-    The image is no longer used as a cropped absolute background.
-    It becomes a normal image, so the browser can keep its full aspect ratio.
-    A minimum height is kept only to leave enough room for the title overlay.
-  */
-  .hero,
-  .hero--home {
-    display: block;
-    min-height: clamp(420px, 82vw, 560px);
-    overflow: hidden;
-  }
-
-  .hero--home {
-    min-height: clamp(480px, 94vw, 640px);
-  }
-
-  .hero-image {
-    position: static;
+    justify-content: flex-start;
     width: 100%;
-    height: auto;
-    min-height: 0;
-    object-fit: contain;
-    object-position: center;
-    transform: none;
+    min-height: 48px;
   }
 
-  .hero::after {
-    background:
-      linear-gradient(to top, rgba(7, 17, 31, 0.90), rgba(7, 17, 31, 0.46) 58%, rgba(7, 17, 31, 0.18)),
-      linear-gradient(90deg, rgba(7, 17, 31, 0.64), rgba(7, 17, 31, 0.18) 72%);
+  .hero {
+    min-height: 64vh;
+  }
+
+  .hero--home {
+    min-height: 76vh;
   }
 
   .hero-inner {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
     width: min(var(--max), calc(100% - var(--content-gutter-total)));
-    padding: 0 0 clamp(58px, 14vw, 94px);
-  }
-
-  .eyebrow {
-    margin-bottom: 0.55rem;
-    font-size: 0.72rem;
-  }
-
-  .hero h1 {
-    font-size: clamp(2.05rem, 8.2vw, 3.25rem);
-    line-height: 0.98;
-    letter-spacing: -0.055em;
-  }
-
-  .hero--home h1 {
-    max-width: min(100%, 760px);
-    font-size: clamp(1.9rem, 7.2vw, 3.0rem);
-  }
-
-  .hero--compact h1 {
-    font-size: clamp(2.05rem, 8.2vw, 3.25rem);
-  }
-
-  .hero-lead {
-    max-width: 92%;
-    margin-top: 0.85rem;
-    font-size: clamp(0.94rem, 3.8vw, 1.05rem);
-    line-height: 1.45;
+    padding-bottom: 104px;
   }
 
   .page-shell {
     width: min(var(--max), calc(100% - var(--content-gutter-total)));
-    margin-top: -42px;
+    margin-top: -58px;
   }
 
   .profile-card {
@@ -962,21 +884,161 @@ iframe[src*="google.com/maps"] {
   backdrop-filter: blur(10px);
 }
 
-/* Mobile header placement fix
----------------------------------------------------------------------------*/
+/* Mobile navigation and hero image layout
+---------------------------------------------------------------------------
+   On phones, the navigation bar stays in the normal page flow.
+   The hero image starts immediately below the navigation bar, without being
+   covered by the fixed header. The menu is shown as a horizontal scrollable
+   tab list instead of being hidden behind the Menu button.
+*/
 @media (max-width: 860px) {
+  :root {
+    --topbar-height: 64px;
+    --content-gutter-total: 28px;
+  }
+
+  body.nav-open {
+    overflow: auto;
+  }
+
   .site-header {
     position: sticky;
     top: 0;
     right: auto;
     left: auto;
     z-index: 100;
-    padding: 10px 12px;
+    padding: 10px 12px 0;
     background: linear-gradient(135deg, var(--bg), var(--bg-2));
+    pointer-events: auto;
+  }
+
+  .topbar {
+    width: 100%;
+    min-height: auto;
+    margin: 0 auto;
+    padding: 10px 12px;
+    border-radius: 26px;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 0;
+    overflow: hidden;
+  }
+
+  .nav-toggle {
+    display: none !important;
+  }
+
+  .nav-menu {
+    width: 100%;
+    display: flex !important;
+    margin: 0;
+    padding: 0;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.12rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    list-style: none;
+    background: transparent;
+    border-radius: 0;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .nav-menu::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-menu li {
+    flex: 0 0 auto;
+  }
+
+  .nav-menu a {
+    flex: 0 0 auto;
+    justify-content: center;
+    width: auto;
+    min-height: 44px;
+    padding: 0 0.82rem;
+    font-size: 0.72rem;
   }
 
   .hero,
   .hero--home {
+    display: block;
+    position: relative;
+    min-height: clamp(420px, 82vw, 560px);
     margin-top: 0;
+    overflow: hidden;
+  }
+
+  .hero--home {
+    min-height: clamp(480px, 94vw, 640px);
+  }
+
+  .hero-image {
+    position: static;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    object-fit: contain;
+    object-position: center;
+    transform: none;
+  }
+
+  .hero::after {
+    background:
+      linear-gradient(to top, rgba(7, 17, 31, 0.90), rgba(7, 17, 31, 0.46) 58%, rgba(7, 17, 31, 0.18)),
+      linear-gradient(90deg, rgba(7, 17, 31, 0.64), rgba(7, 17, 31, 0.18) 72%);
+  }
+
+  .hero-inner {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: min(var(--max), calc(100% - var(--content-gutter-total)));
+    padding: 0 0 clamp(58px, 14vw, 94px);
+  }
+
+  .eyebrow {
+    margin-bottom: 0.55rem;
+    font-size: 0.72rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.05rem, 8.2vw, 3.25rem);
+    line-height: 0.98;
+    letter-spacing: -0.055em;
+  }
+
+  .hero--home h1 {
+    max-width: min(100%, 760px);
+    font-size: clamp(1.9rem, 7.2vw, 3.0rem);
+  }
+
+  .hero--compact h1 {
+    font-size: clamp(2.05rem, 8.2vw, 3.25rem);
+  }
+
+  .hero-lead {
+    max-width: 92%;
+    margin-top: 0.85rem;
+    font-size: clamp(0.94rem, 3.8vw, 1.05rem);
+    line-height: 1.45;
+  }
+
+  .page-shell {
+    width: min(var(--max), calc(100% - var(--content-gutter-total)));
+    margin-top: -42px;
+  }
+
+  .profile-card {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-photo {
+    max-width: 360px;
   }
 }
