@@ -1042,3 +1042,78 @@ iframe[src*="google.com/maps"] {
     max-width: 360px;
   }
 }
+
+
+/* Responsive corrections for phones and tablets.
+   Applies only below 860px; desktop layout and page content are unchanged. */
+@media (max-width: 860px) {
+  html { scroll-padding-top: 100px; }
+
+  /* The navigation scrolls inside its own bar, not the whole page. */
+  .nav-menu {
+    min-width: 0;
+    max-width: 100%;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+  }
+  .nav-menu li { scroll-snap-align: start; }
+
+  /* Keep the photograph behind the hero text on narrow screens.
+     With an intrinsic-size image, blank space may appear below it. */
+  .hero,
+  .hero--home {
+    display: flex;
+    align-items: flex-end;
+    min-height: clamp(360px, 100vw, 540px);
+  }
+  .hero--home { min-height: clamp(430px, 115vw, 620px); }
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .hero-inner {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    margin: 0 auto;
+    padding: 110px 0 90px;
+  }
+
+  /* Long links and embedded documents must not widen the viewport. */
+  .content-panel,
+  .content-panel > section,
+  .mini-card,
+  .profile-copy {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .content-panel pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .content-panel table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .content-panel iframe,
+  .site-embed {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero--home h1 { font-size: clamp(1.85rem, 7.6vw, 2.7rem); }
+  .hero-lead { max-width: 100%; }
+  .content-panel > section,
+  .mini-card { padding: 20px; }
+  .content-panel h2,
+  .mini-card h2 { overflow-wrap: anywhere; }
+}
